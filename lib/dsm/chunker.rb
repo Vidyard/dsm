@@ -2,7 +2,7 @@ module Dsm
   class Chunker
 
     DEFAULT_STRIDE = 1000
-    DEFAULT_THROTTLE = 200
+    DEFAULT_THROTTLE = 1000
     DEFAULT_START_ID = 1
 
     attr_accessor :stride, :throttle, :start_id, :end_id, :num_rows, :num_chunks, :num_chunks_requested, :next_start_id
