@@ -26,6 +26,7 @@ describe 'migrate_data' do
     allow_any_instance_of(::Dsm::Time).to receive(:total_duration).and_return(5.1234)
     allow_any_instance_of(::Dsm::Time).to receive(:overall_average).and_return(0.4567)
     allow_any_instance_of(::Dsm::Time).to receive(:recent_average).and_return(0.4567)
+    allow_any_instance_of(::Dsm::Time).to receive(:estimate).and_return({:hours => 0, :minutes => 12, :seconds => 13, :total_seconds => 733})
 
     output = StringIO.new
     count = 0
@@ -38,7 +39,7 @@ describe 'migrate_data' do
 
     expect(count).to eq(10)
     expect(range_end_points).to eq([1, 10, 11, 20, 21, 30, 31, 40, 41, 50, 51, 60, 61, 70, 71, 80, 81, 90, 91, 100])
-    expect(output.string).to eq("Migrating data for table: persons\nStride: 10\nThrottle: 50 ms (included in averages)\nStart Id: 1\nEnd Id: 100\n\r10% complete [1/10] | Recent Average (10) Speed 0.457s | Average Speed 0.457s | Runtime 5.123s\r20% complete [2/10] | Recent Average (10) Speed 0.457s | Average Speed 0.457s | Runtime 5.123s\r30% complete [3/10] | Recent Average (10) Speed 0.457s | Average Speed 0.457s | Runtime 5.123s\r40% complete [4/10] | Recent Average (10) Speed 0.457s | Average Speed 0.457s | Runtime 5.123s\r50% complete [5/10] | Recent Average (10) Speed 0.457s | Average Speed 0.457s | Runtime 5.123s\r60% complete [6/10] | Recent Average (10) Speed 0.457s | Average Speed 0.457s | Runtime 5.123s\r70% complete [7/10] | Recent Average (10) Speed 0.457s | Average Speed 0.457s | Runtime 5.123s\r80% complete [8/10] | Recent Average (10) Speed 0.457s | Average Speed 0.457s | Runtime 5.123s\r90% complete [9/10] | Recent Average (10) Speed 0.457s | Average Speed 0.457s | Runtime 5.123s\r100% complete [10/10] | Recent Average (10) Speed 0.457s | Average Speed 0.457s | Runtime 5.123s \n \nDONE!\n")
+    expect(output.string).to eq("Migrating data for table: persons\nStride: 10\nThrottle: 50 ms (included in averages)\nStart Id: 1\nEnd Id: 100\n\r10% complete [1/10] | Recent Mean: 0.457s | Mean: 0.457s | Runtime: 5.123s | Remaining: 0:12:13\r20% complete [2/10] | Recent Mean: 0.457s | Mean: 0.457s | Runtime: 5.123s | Remaining: 0:12:13\r30% complete [3/10] | Recent Mean: 0.457s | Mean: 0.457s | Runtime: 5.123s | Remaining: 0:12:13\r40% complete [4/10] | Recent Mean: 0.457s | Mean: 0.457s | Runtime: 5.123s | Remaining: 0:12:13\r50% complete [5/10] | Recent Mean: 0.457s | Mean: 0.457s | Runtime: 5.123s | Remaining: 0:12:13\r60% complete [6/10] | Recent Mean: 0.457s | Mean: 0.457s | Runtime: 5.123s | Remaining: 0:12:13\r70% complete [7/10] | Recent Mean: 0.457s | Mean: 0.457s | Runtime: 5.123s | Remaining: 0:12:13\r80% complete [8/10] | Recent Mean: 0.457s | Mean: 0.457s | Runtime: 5.123s | Remaining: 0:12:13\r90% complete [9/10] | Recent Mean: 0.457s | Mean: 0.457s | Runtime: 5.123s | Remaining: 0:12:13\r100% complete [10/10] | Recent Mean: 0.457s | Mean: 0.457s | Runtime: 5.123s | Remaining: 0:12:13 \n \nDONE!\n")
   end
 
   it 'should obey start and end id when set' do
@@ -55,6 +56,7 @@ describe 'migrate_data' do
     allow_any_instance_of(::Dsm::Time).to receive(:total_duration).and_return(5.1234)
     allow_any_instance_of(::Dsm::Time).to receive(:overall_average).and_return(0.4567)
     allow_any_instance_of(::Dsm::Time).to receive(:recent_average).and_return(0.4567)
+    allow_any_instance_of(::Dsm::Time).to receive(:estimate).and_return({:hours => 0, :minutes => 12, :seconds => 13, :total_seconds => 733})
 
     output = StringIO.new
     count = 0
@@ -67,7 +69,7 @@ describe 'migrate_data' do
 
     expect(count).to eq(1)
     expect(range_end_points).to eq([3, 12])
-    expect(output.string).to eq("TEST DESCRIPTION\nStride: 10\nThrottle: 50 ms (included in averages)\nStart Id: 3\nEnd Id: 12\n\r100% complete [1/1] | Recent Average (10) Speed 0.457s | Average Speed 0.457s | Runtime 5.123s \n \nDONE!\n")
+    expect(output.string).to eq("TEST DESCRIPTION\nStride: 10\nThrottle: 50 ms (included in averages)\nStart Id: 3\nEnd Id: 12\n\r100% complete [1/1] | Recent Mean: 0.457s | Mean: 0.457s | Runtime: 5.123s | Remaining: 0:12:13 \n \nDONE!\n")
   end
 
   it 'should obey start and end id when not nicely divisible by stride' do
@@ -84,6 +86,7 @@ describe 'migrate_data' do
     allow_any_instance_of(::Dsm::Time).to receive(:total_duration).and_return(5.1234)
     allow_any_instance_of(::Dsm::Time).to receive(:overall_average).and_return(0.4567)
     allow_any_instance_of(::Dsm::Time).to receive(:recent_average).and_return(0.4567)
+    allow_any_instance_of(::Dsm::Time).to receive(:estimate).and_return({:hours => 0, :minutes => 12, :seconds => 13, :total_seconds => 733})
 
     output = StringIO.new
     count = 0
@@ -96,7 +99,7 @@ describe 'migrate_data' do
 
     expect(count).to eq(2)
     expect(range_end_points).to eq([1, 10, 11, 11])
-    expect(output.string).to eq("Migrating data for table: persons\nStride: 10\nThrottle: 50 ms (included in averages)\nStart Id: 1\nEnd Id: 11\n\r50% complete [1/2] | Recent Average (10) Speed 0.457s | Average Speed 0.457s | Runtime 5.123s\r100% complete [2/2] | Recent Average (10) Speed 0.457s | Average Speed 0.457s | Runtime 5.123s \n \nDONE!\n")
+    expect(output.string).to eq("Migrating data for table: persons\nStride: 10\nThrottle: 50 ms (included in averages)\nStart Id: 1\nEnd Id: 11\n\r50% complete [1/2] | Recent Mean: 0.457s | Mean: 0.457s | Runtime: 5.123s | Remaining: 0:12:13\r100% complete [2/2] | Recent Mean: 0.457s | Mean: 0.457s | Runtime: 5.123s | Remaining: 0:12:13 \n \nDONE!\n")
   end
 
   it 'should obey start and end id stride greater than end_id - start_id' do
@@ -113,6 +116,7 @@ describe 'migrate_data' do
     allow_any_instance_of(::Dsm::Time).to receive(:total_duration).and_return(5.1234)
     allow_any_instance_of(::Dsm::Time).to receive(:overall_average).and_return(0.4567)
     allow_any_instance_of(::Dsm::Time).to receive(:recent_average).and_return(0.4567)
+    allow_any_instance_of(::Dsm::Time).to receive(:estimate).and_return({:hours => 0, :minutes => 12, :seconds => 13, :total_seconds => 733})
 
     output = StringIO.new
     count = 0
@@ -125,7 +129,7 @@ describe 'migrate_data' do
 
     expect(count).to eq(1)
     expect(range_end_points).to eq([3, 5])
-    expect(output.string).to eq("Migrating data for table: persons\nStride: 10\nThrottle: 50 ms (included in averages)\nStart Id: 3\nEnd Id: 5\n\r100% complete [1/1] | Recent Average (10) Speed 0.457s | Average Speed 0.457s | Runtime 5.123s \n \nDONE!\n")
+    expect(output.string).to eq("Migrating data for table: persons\nStride: 10\nThrottle: 50 ms (included in averages)\nStart Id: 3\nEnd Id: 5\n\r100% complete [1/1] | Recent Mean: 0.457s | Mean: 0.457s | Runtime: 5.123s | Remaining: 0:12:13 \n \nDONE!\n")
   end
 
   it 'should output range when error is raised' do
@@ -142,6 +146,7 @@ describe 'migrate_data' do
     allow_any_instance_of(::Dsm::Time).to receive(:total_duration).and_return(5.1234)
     allow_any_instance_of(::Dsm::Time).to receive(:overall_average).and_return(0.4567)
     allow_any_instance_of(::Dsm::Time).to receive(:recent_average).and_return(0.4567)
+    allow_any_instance_of(::Dsm::Time).to receive(:estimate).and_return({:hours => 0, :minutes => 12, :seconds => 13, :total_seconds => 733})
 
     output = StringIO.new
     count = 0
@@ -156,6 +161,6 @@ describe 'migrate_data' do
     }.to raise_error(StandardError)
 
     expect(count).to eq(2)
-    expect(output.string).to eq("Migrating data for table: persons\nStride: 10\nThrottle: 50 ms (included in averages)\nStart Id: 1\nEnd Id: 20\n\r50% complete [1/2] | Recent Average (10) Speed 0.457s | Average Speed 0.457s | Runtime 5.123sError in range 11 to 20\n")
+    expect(output.string).to eq("Migrating data for table: persons\nStride: 10\nThrottle: 50 ms (included in averages)\nStart Id: 1\nEnd Id: 20\n\r50% complete [1/2] | Recent Mean: 0.457s | Mean: 0.457s | Runtime: 5.123s | Remaining: 0:12:13Error in range 11 to 20\n")
   end
 end
