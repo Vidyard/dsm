@@ -77,6 +77,21 @@ end
 | :end_id | Id to end the migration on (inclusive) | MAX(id) |
 | :desc | Text description to print out before starting migration | |
 
+## Tests
+
+1. Create a directory name `.dsm` in your home directory
+2. Create a file named `dsmrc` that looks like this
+```
+mysqldir=/usr/local/mysql
+dsmdir=~/.dsm/db
+port=3308
+```
+
+3. cd to dsm project location
+4. run `bundle install`
+5. run `./bin/dsm-spec-setup.sh` (creates new mysql instance and `dsm` database required for tests)
+6. run `bundle exec rspec spec`
+
 ## Contributing
 
 1. Fork it
