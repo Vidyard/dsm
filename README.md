@@ -2,7 +2,7 @@
 
 DSM helps make data migrations on large MySQL tables with zero downtime. DSM's interface was modelled after [LHM](https://github.com/soundcloud/lhm). LHM is an essential tool for consistently and easily migrating MySQL schema with zero downtime, however it does not offer any framework for migrating the data within those tables, that is where DSM comes in.
 
-![Protron Synchrotron](http://www.interactions.org/imagebank/images/CE0295M.jpg)
+![Protron Synchrotron](http://home.cern/sites/home.web.cern.ch/files/styles/medium/public/image/experiment/2013/01/cloud.jpeg)
 
 ## What DSM provides
 
